@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Trench Warfare Simulation</title>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+background:#e5e5e5;
+padding:30px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:8px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+button{
+padding:10px 20px;
+font-size:16px;
+margin:10px 0;
+cursor:pointer;
+}
+
+.event{
+margin-top:30px;
+padding:20px;
+border-top:2px solid #ccc;
+}
+
+.event-title{
+font-size:22px;
+margin-bottom:10px;
+}
+
+textarea{
+width:100%;
+height:70px;
+margin-top:5px;
+margin-bottom:10px;
+}
+
+.summaryBox{
+width:100%;
+height:250px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Life in the Trenches – Event Simulation</h1>
+
+<p>Roll events and answer the questions. After completing five events, generate your response summary and copy it into your Google Doc.</p>
+
+<button onclick="rollEvent()">Roll Event</button>
+
+<div id="eventsArea"></div>
+
+<br>
+
+<button onclick="generateSummary()">Generate Response Summary</button>
+
+<h3>Copy Your Answers</h3>
+
+<textarea id="summary" class="summaryBox" placeholder="Click 'Generate Response Summary' to compile your answers here..."></textarea>
+
+</div>
+
+<script>
+
+let eventCount = 0;
+
+const events = [
+
+{
+title:"Endless Rain",
+text:`For three days the rain has fallen without stopping. The trench floor has turned into thick mud that sucks at your boots. Water fills the bottom of the trench until it reaches your ankles.
+
+Your socks are soaked and your uniform never fully dries. Sleep is nearly impossible. Soldiers worry constantly about trench foot as the cold water slowly numbs their feet.`,
+q:[
+"How might constant wet conditions affect soldiers physically?",
+"How might these conditions affect morale?",
+"What does this reveal about daily life in the trenches?"
+]
+},
+
+{
+title:"Giant Rats",
+text:`Late at night scratching echoes through the trench walls. Rats thrive here, feeding on discarded food and sometimes even the bodies left in no man's land.
+
+Some are enormous, nearly the size of cats. Soldiers wake to find rats crawling across their blankets or chewing through their packs.`,
+q:[
+"Why were rats common in trenches?",
+"How might living with rats affect soldiers psychologically?",
+"What does this suggest about trench conditions?"
+]
+},
+
+{
+title:"Artillery Barrage",
+text:`Without warning the thunder of artillery begins. Shells crash nearby, shaking the trench walls and sending dirt into the air.
+
+Every soldier waits for the next explosion, wondering if it will land directly on their position.`,
+q:[
+"Why was artillery so feared in World War I?",
+"How might constant bombardment affect soldiers mentally?",
+"What challenges did soldiers face during artillery attacks?"
+]
+},
+
+{
+title:"Bodies in No Man's Land",
+text:`The attack last week failed. Many soldiers who went over the top never returned.
+
+Their bodies still lie scattered across no man's land. Flies gather and the smell drifts into the trench when the wind blows.`,
+q:[
+"Why were many bodies left on the battlefield?",
+"How might seeing fallen soldiers affect morale?",
+"What does this reveal about the brutality of trench warfare?"
+]
+},
+
+{
+title:"Trench Foot",
+text:`After days of wet conditions your feet swell painfully inside your boots.
+
+When you remove them the skin is pale and cracked. Severe cases sometimes require amputation.`,
+q:[
+"What caused trench foot?",
+"How would injuries like this affect soldiers in battle?",
+"What does trench foot reveal about trench conditions?"
+]
+},
+
+{
+title:"Night Patrol",
+text:`After dark a small group climbs out of the trench to patrol no man's land.
+
+Every shadow is dangerous. A flare suddenly lights the sky and everyone freezes, hoping the enemy has not spotted them.`,
+q:[
+"What dangers did night patrols involve?",
+"Why were patrols important in trench warfare?",
+"How might missions like this affect morale?"
+]
+}
+
+];
+
+function rollEvent(){
+
+if(eventCount >= 5){
+alert("You have already rolled 5 events.");
+return;
+}
+
+const event = events[Math.floor(Math.random()*events.length)];
+
+eventCount++;
+
+let html = `<div class="event">
+<div class="event-title">Event ${eventCount}: ${event.title}</div>
+<p>${event.text}</p>`;
+
+event.q.forEach((q,i)=>{
+
+html += `
+<div>${i+1}. ${q}</div>
+<textarea class="answer"></textarea>
+`;
+
+});
+
+html += `</div>`;
+
+document.getElementById("eventsArea").innerHTML += html;
+
+}
+
+function generateSummary(){
+
+let answers = document.querySelectorAll(".answer");
+let summary = "";
+
+answers.forEach((box,i)=>{
+summary += "Answer " + (i+1) + ":\n";
+summary += box.value + "\n\n";
+});
+
+document.getElementById("summary").value = summary;
+
+}
+
+</script>
+
+</body>
+</html>
